@@ -1,4 +1,4 @@
-app.factory('categoriesFactory', function($http, $q, $routeParams) {
+app.factory('categoriesFactory', ['$http', '$q', '$routeParams',function($http, $q, $routeParams) {
     categorie = {
 
         categories: undefined,
@@ -66,4 +66,4 @@ app.factory('categoriesFactory', function($http, $q, $routeParams) {
 
     }
     return categorie;
-});
+}]);

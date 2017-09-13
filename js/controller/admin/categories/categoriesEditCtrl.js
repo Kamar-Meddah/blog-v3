@@ -1,4 +1,4 @@
-app.controller('categoriesEditCtrl', function($scope, $routeParams,categoriesFactory, EzAlert, $location) {
+app.controller('categoriesEditCtrl', ['$scope', '$routeParams','categoriesFactory', 'EzAlert', '$location',function($scope, $routeParams,categoriesFactory, EzAlert, $location) {
 
     $scope.insert = () => {
         categoriesFactory.insert($scope.ins).then((data) => {
@@ -20,4 +20,4 @@ app.controller('categoriesEditCtrl', function($scope, $routeParams,categoriesFac
         });
     }
 
-});
+}]);

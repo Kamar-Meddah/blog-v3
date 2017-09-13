@@ -1,4 +1,4 @@
-app.controller('adminPostsCtrl', function($scope, $rootScope,$ngConfirm, postsFactory, EzAlert, $routeParams) {
+app.controller('adminPostsCtrl',['$scope', '$rootScope','$ngConfirm', 'postsFactory', 'EzAlert', '$routeParams', function($scope, $rootScope,$ngConfirm, postsFactory, EzAlert, $routeParams) {
     $rootScope.loading = true;
 
     $scope.pages = [];
@@ -46,6 +46,4 @@ app.controller('adminPostsCtrl', function($scope, $rootScope,$ngConfirm, postsFa
             }
         });
         }
-    
-
-});
+}]);

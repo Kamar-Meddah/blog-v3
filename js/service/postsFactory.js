@@ -1,4 +1,4 @@
-app.factory('postsFactory', function($http, $q) {
+app.factory('postsFactory',['$http', '$q', function($http, $q) {
     PostsFactory={
     posts : false,
     categories :false,
@@ -89,4 +89,4 @@ app.factory('postsFactory', function($http, $q) {
 }
 return PostsFactory;
 
-});
+}]);

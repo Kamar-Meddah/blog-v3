@@ -1,4 +1,4 @@
-app.factory('commentsFactory', function($http, $q, $routeParams) {
+app.factory('commentsFactory', ['$http', '$q', '$routeParams',function($http, $q, $routeParams) {
     CommentsFactory = {
 
         find: (id) => {
@@ -35,4 +35,4 @@ app.factory('commentsFactory', function($http, $q, $routeParams) {
     }
 
     return CommentsFactory;
-});
+}]);

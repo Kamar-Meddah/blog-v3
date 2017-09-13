@@ -1,4 +1,4 @@
-app.controller('postCtrl', function($scope, $ngConfirm, commentsFactory, categoriesFactory, userService, imagesFactory, $rootScope, postsFactory, $routeParams, EzAlert, $filter) {
+app.controller('postCtrl', ['$scope', '$ngConfirm', 'commentsFactory', 'categoriesFactory', 'userService', 'imagesFactory', '$rootScope', 'postsFactory', '$routeParams', 'EzAlert', '$filte',function($scope, $ngConfirm, commentsFactory, categoriesFactory, userService, imagesFactory, $rootScope, postsFactory, $routeParams, EzAlert, $filter) {
     $rootScope.loading = true;
     $scope.load = true;
 
@@ -66,4 +66,4 @@ app.controller('postCtrl', function($scope, $ngConfirm, commentsFactory, categor
             }
         });
     }
-});
+}]);

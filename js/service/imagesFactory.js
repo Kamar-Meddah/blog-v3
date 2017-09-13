@@ -1,4 +1,4 @@
-app.factory('imagesFactory', function($http, $q) {
+app.factory('imagesFactory', ['$http', '$q',function($http, $q) {
     ImagesFactory={
 
         find : (id) => {
@@ -24,4 +24,4 @@ app.factory('imagesFactory', function($http, $q) {
 
     }
     return ImagesFactory;
-});
+}]);

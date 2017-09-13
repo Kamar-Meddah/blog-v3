@@ -1,4 +1,4 @@
-app.controller('categoriesCtrl', function($ngConfirm, $scope, $rootScope, categoriesFactory, EzAlert,$routeParams) {
+app.controller('categoriesCtrl', ['$ngConfirm', '$scope', '$rootScope', 'categoriesFactory', 'EzAlert','$routeParams',function($ngConfirm, $scope, $rootScope, categoriesFactory, EzAlert,$routeParams) {
     $rootScope.loading = true;
 
     $scope.pages = [];
@@ -50,4 +50,4 @@ app.controller('categoriesCtrl', function($ngConfirm, $scope, $rootScope, catego
             }
         });
     }
-});
+}]);

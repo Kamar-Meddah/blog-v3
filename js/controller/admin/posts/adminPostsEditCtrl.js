@@ -1,4 +1,4 @@
-app.controller('adminPostsEditCtrl', function($scope, $ngConfirm,$rootScope, $routeParams,imagesFactory,categoriesFactory, postsFactory, EzAlert, $location, $http) {
+app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$routeParams','imagesFactory','categoriesFactory', 'postsFactory', 'EzAlert', '$location', '$http',function($scope, $ngConfirm,$rootScope, $routeParams,imagesFactory,categoriesFactory, postsFactory, EzAlert, $location, $http) {
     $rootScope.loading = true;
     $rootScope.lo = true;
     $scope.images=[];
@@ -86,4 +86,4 @@ app.controller('adminPostsEditCtrl', function($scope, $ngConfirm,$rootScope, $ro
             EzAlert.error(data);
         });
     }
-});
+}]);

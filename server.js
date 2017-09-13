@@ -27,13 +27,6 @@ app.post('/',upload.array('images'),(req,res)=>{
  const fun=string[1]
  ctrl[fun](req,res)
 })
-app.post('/r',upload.array('images'),(req,res)=>{
-
-  console.log(req.body)
-  console.log(req.files)
-
-
-})
 
 //-------------------------------------------------------------------------
 //server port default=80*/

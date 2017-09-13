@@ -1,4 +1,4 @@
-app.service('userService', function($http, $q) {
+app.service('userService', ['$http', '$q',function($http, $q) {
     $this = this;
 
     $this.logged = () => {
@@ -63,4 +63,4 @@ app.service('userService', function($http, $q) {
         });
         return deferred.promise;
     }
-});
+}]);

@@ -1,4 +1,4 @@
-app.controller('usersCtrl', function($scope, $rootScope,userService, $http, EzAlert, $location) {
+app.controller('usersCtrl', ['$scope', '$rootScope','userService', '$http', 'EzAlert', '$location',function($scope, $rootScope,userService, $http, EzAlert, $location) {
 
     userService.logged().then((data) => {
         if (data === true) {
@@ -21,4 +21,4 @@ app.controller('usersCtrl', function($scope, $rootScope,userService, $http, EzAl
             EzAlert.error('unable to contact the server refresh the page');
         })
     }
-});
+}]);

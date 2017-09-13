@@ -1,4 +1,4 @@
-app.controller('postsCtrl', function($scope, $rootScope, categoriesFactory, postsFactory, $routeParams) {
+app.controller('postsCtrl',['$scope', '$rootScope', 'categoriesFactory', 'postsFactory', '$routeParams', function($scope, $rootScope, categoriesFactory, postsFactory, $routeParams) {
     $rootScope.loading = true;
     $scope.pages = [];
     if ($routeParams.page == 1) {
@@ -27,4 +27,4 @@ app.controller('postsCtrl', function($scope, $rootScope, categoriesFactory, post
     });
 
 
-});
+}]);

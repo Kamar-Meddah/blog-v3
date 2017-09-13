@@ -1,4 +1,4 @@
-app.controller('postsSearchCtrl', function($scope, $rootScope, $routeParams, categoriesFactory, postsFactory, $rootScope, $location) {
+app.controller('postsSearchCtrl',['$scope', '$rootScope', '$routeParams', 'categoriesFactory', 'postsFactory', '$rootScope', '$location', function($scope, $rootScope, $routeParams, categoriesFactory, postsFactory, $rootScope, $location) {
     $rootScope.loading = true;
 
     $scope.pages = [];
@@ -23,4 +23,4 @@ app.controller('postsSearchCtrl', function($scope, $rootScope, $routeParams, cat
     categoriesFactory.allCat().then((data) => {
         $scope.categories = data;
     }, (data) => {});
-});
+}]);
