@@ -1,4 +1,4 @@
-let app = angular.module('blog-v3', ['ngRoute', 'ngSanitize', 'ez.alert', 'ui.tinymce', 'cp.ngConfirm']);
+let app = angular.module('blog-v3', ['ngRoute', 'ngSanitize', 'ez.alert', 'ui.tinymce', 'cp.ngConfirm','yaru22.angular-timeago']);
 
 app.config(($routeProvider) => {
     $routeProvider

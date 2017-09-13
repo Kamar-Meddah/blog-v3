@@ -15,7 +15,9 @@
             <div ng-repeat="post in posts">
                 <h2><a href="#!/category={{post.categorie}}/post={{post.titre}}/{{post.id}}">{{post.titre}}</a></h2>
                 <i class="fa fa-folder-open-o" aria-hidden="true"></i><em>{{post.categorie}}</em>
+                <br><br>
                 <p ng-bind-html="post|contenu"></p>
+                <div class="text-right"><em>{{post.date|timeAgo}}</em></div>
                 <hr>
             </div>
         </div>

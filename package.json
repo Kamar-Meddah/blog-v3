@@ -10,6 +10,8 @@
   "author": "kamar meddah",
   "license": "MIT",
   "dependencies": {
+    "angular": "^1.6.6",
+    "angular-timeago": "^0.4.6",
     "body-parser": "^1.17.2",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
