@@ -58,6 +58,9 @@ app.config(($routeProvider) => {
             templateUrl: 'view/admin/user/usernameEdit.html',
             controller: 'userCtrl'
         })
+        .when('/err/error/404/', {
+            templateUrl: 'view/error.html'
+        })
         .otherwise({
             redirectTo: '/1/'
         });

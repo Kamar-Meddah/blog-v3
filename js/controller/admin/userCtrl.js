@@ -1,7 +1,7 @@
 app.controller('userCtrl', ['$scope', '$rootScope', 'userService', 'EzAlert', '$location',function($scope, $rootScope, userService, EzAlert, $location) {
     userService.logged().then((data) => {
         if (data === false) {
-            document.write('<h1 align="center">Error 403 accés interdit</h1>');
+            $location.path('err/error/404');
             $rootScope.dat = false;
             throw ('acces interdit');
 

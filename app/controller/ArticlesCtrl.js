@@ -101,18 +101,19 @@ add(request,response){
 edit(request,response){
     const fs=require('fs');
     let r=[];
-    this.articles.update(request.params.id,['titre','contenu','category_id'],[request.body.titre,request.body.content,request.body.category],()=>{
+    this.articles.update(request.body.id,['titre','contenu','category_id'],[request.body.titre,request.body.content,request.body.category],()=>{
       const images=require('../app').getTable('images');
-      if(request.files.length === '0'){
+      if(request.files.length !== '0'){
       request.files.forEach((element,i)=>{
         if(element.mimetype.split('/')[0] ==='image'){
         images.create(['articles_id'],[request.body.id],(imgId)=>{
-          fs.rename(`img/articles/${element.filename}`,`img/articles/${imgId}.jpg`,()=>{
+          fs.rename(`img/articles/${element.filename}`,`img/articles/${imgId}.jpg`,(err)=>{
+            if(err){}
             let name=imgId+'.jpg';
             images.update(imgId,['name'],[name]);
             r.push({'id':imgId,'name':name});
             if(i === request.files.length-1){
-              response.json(r)
+              response.json(r);
             }
           })//end rename
         })//end image insert

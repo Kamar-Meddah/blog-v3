@@ -81,9 +81,9 @@ app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
               $scope.images.push(value);
             });
             $('#file').val(null);
-            EzAlert.success('Votre post a été modifié');
         },(data)=>{
             EzAlert.error(data);
         });
+        EzAlert.success('Votre post a été modifié');
     }
 }]);
