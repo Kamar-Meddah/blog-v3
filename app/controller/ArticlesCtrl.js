@@ -103,7 +103,7 @@ edit(request,response){
     let r=[];
     this.articles.update(request.body.id,['titre','contenu','category_id'],[request.body.titre,request.body.content,request.body.category],()=>{
       const images=require('../app').getTable('images');
-      if(request.files.length !== '0'){
+      if(request.files.length > '0'){
       request.files.forEach((element,i)=>{
         if(element.mimetype.split('/')[0] ==='image'){
         images.create(['articles_id'],[request.body.id],(imgId)=>{
