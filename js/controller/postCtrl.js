@@ -21,7 +21,7 @@ app.controller('PostCtrl', ['$scope','$ngConfirm','CommentsFactory','CategoriesF
     })
 
     CategoriesFactory.allCat().then((data) => {
-        $scope.categories = data;
+        $scope.categories = data.art;
     }, (data) => {});
 
     CommentsFactory.find($routeParams.postId).then((data) => {

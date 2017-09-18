@@ -21,7 +21,7 @@ app.controller('PostsCtrl',['$scope', '$rootScope', 'CategoriesFactory', 'PostsF
 
 
     CategoriesFactory.allCat().then((data) => {
-        $scope.categories = data;
+        $scope.categories = data.art;
     }, (data) => {
         alert(data);
     });

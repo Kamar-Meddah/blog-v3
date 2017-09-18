@@ -6,7 +6,7 @@ class CategoriesCtrl{
 
   all(request,response){
       this.categories.all((row)=>{
-      response.json(row);
+      response.json({'art':row});
     })
   }
 
