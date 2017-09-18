@@ -1,4 +1,4 @@
-app.controller('adminPostsCtrl',['$scope', '$rootScope','$ngConfirm', 'postsFactory', 'EzAlert', '$routeParams', function($scope, $rootScope,$ngConfirm, postsFactory, EzAlert, $routeParams) {
+app.controller('AdminPostsCtrl',['$scope', '$rootScope','$ngConfirm', 'PostsFactory', 'EzAlert', '$routeParams', function($scope, $rootScope,$ngConfirm, PostsFactory, EzAlert, $routeParams) {
     $rootScope.loading = true;
 
     $scope.pages = [];
@@ -9,7 +9,7 @@ app.controller('adminPostsCtrl',['$scope', '$rootScope','$ngConfirm', 'postsFact
     }
     $scope.p = $routeParams.page;
 
-    postsFactory.all($scope.p).then((data) => {
+    PostsFactory.all($scope.p).then((data) => {
         $scope.posts = data.art;
         $scope.last = data.nbpage;
         for (let i = 1; i <= data.nbpage; i++) {
@@ -29,7 +29,7 @@ app.controller('adminPostsCtrl',['$scope', '$rootScope','$ngConfirm', 'postsFact
                     text: 'Oui',
                     btnClass: 'btn-red',
                     action: function(scope, button){  
-                        postsFactory.delete(id).then((data) => {
+                        PostsFactory.delete(id).then((data) => {
                           EzAlert.success(data);
                          $scope.posts.splice(index,1);            
                       },(data)=>{

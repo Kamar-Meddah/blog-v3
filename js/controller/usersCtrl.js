@@ -1,6 +1,6 @@
-app.controller('usersCtrl', ['$scope', '$rootScope','userService', '$http', 'EzAlert', '$location',function($scope, $rootScope,userService, $http, EzAlert, $location) {
+app.controller('UsersCtrl', ['$scope', '$rootScope','UserFactory', '$http', 'EzAlert', '$location',function($scope, $rootScope,UserFactory, $http, EzAlert, $location) {
 
-    userService.logged().then((data) => {
+    UserFactory.logged().then((data) => {
         if (data === true) {
             $rootScope.dat = true;
             EzAlert.warning('Vous etes déja connecter');
@@ -10,7 +10,7 @@ app.controller('usersCtrl', ['$scope', '$rootScope','userService', '$http', 'EzA
         }
     });
     $scope.connecter = () => {
-        userService.connect($scope.username, $scope.password).then((data) => {
+        UserFactory.connect($scope.username, $scope.password).then((data) => {
             if (data === true) {
                 EzAlert.success('Bienvenu a votre administration');
                 $location.path('/admin/home');

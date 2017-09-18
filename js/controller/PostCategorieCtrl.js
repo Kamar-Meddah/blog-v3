@@ -1,4 +1,4 @@
-app.controller('bycategorieCtrl',['$scope', '$rootScope', 'categoriesFactory', 'postsFactory', '$routeParams', function($scope, $rootScope, categoriesFactory, postsFactory, $routeParams) {
+app.controller('PostCategorieCtrl',['$scope', '$rootScope', 'CategoriesFactory', 'PostsFactory', '$routeParams', function($scope, $rootScope, CategoriesFactory, PostsFactory, $routeParams) {
     $rootScope.loading = true;
     $scope.pages = [];
     if ($routeParams.page == 1) {
@@ -8,7 +8,7 @@ app.controller('bycategorieCtrl',['$scope', '$rootScope', 'categoriesFactory', '
     }
     $scope.p = $routeParams.page;
 
-    postsFactory.bycategorie($routeParams.category_id, $routeParams.page).then((data) => {
+    PostsFactory.bycategorie($routeParams.category_id, $routeParams.page).then((data) => {
         $rootScope.loading = false;
         $scope.posts = data.art;
         $scope.last = data.nbpage;
@@ -20,7 +20,7 @@ app.controller('bycategorieCtrl',['$scope', '$rootScope', 'categoriesFactory', '
 
     });
 
-    categoriesFactory.allCat().then((data) => {
+    CategoriesFactory.allCat().then((data) => {
 
         $scope.categories = data;
     }, (data) => {

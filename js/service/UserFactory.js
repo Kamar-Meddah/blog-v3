@@ -1,15 +1,14 @@
-app.service('userService', ['$http', '$q',function($http, $q) {
-    $this = this;
-
-    $this.logged = () => {
+app.factory('UserFactory', ['$http', '$q',function($http, $q) {
+    userFactory ={
+    logged: () =>{
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.logged' }).then((response) => {
             deferred.resolve(response.data);
         }, () => {});
         return deferred.promise;
-    }
+    },
 
-    $this.checkPass = (id, pass) => {
+    checkPass: (id, pass) => {
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.passwordCheck', password: pass, 'id': id }).then((response) => {
             deferred.resolve(response.data);
@@ -17,10 +16,10 @@ app.service('userService', ['$http', '$q',function($http, $q) {
             deferred.reject('Impossible de verifié votre infos , merci de rechager la page');
         });
         return deferred.promise;
-    }
+    },
 
 
-    $this.connect = (username, passsword) => {
+    connect :(username, passsword) =>{
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.login', username: username, password: passsword }).then((response) => {
             deferred.resolve(response.data);
@@ -28,9 +27,9 @@ app.service('userService', ['$http', '$q',function($http, $q) {
             deferred.reject('username ou password erroné');
         });
         return deferred.promise;
-    }
+    },
 
-    $this.logout = () => {
+    logout: () =>{
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.logout' }).then(() => {
             deferred.resolve('vous etes deconnecter');
@@ -38,29 +37,31 @@ app.service('userService', ['$http', '$q',function($http, $q) {
             deferred.reject('pas de cnx');
         });
         return deferred.promise;
-    }
+    },
 
-    $this.usernameChange = (id, username) => {
+    usernameChange :(id, username)=> {
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.usernameChange', 'id': id, 'username': username }).then(() => {
             deferred.resolve('Votre nom d\'utilisateur a été changé');
         });
         return deferred.promise;
-    }
+    },
 
-    $this.passChange = (id, pass) => {
+    passChange: (id, pass) =>{
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.passwordChange', 'id': id, 'password': pass }).then(() => {
             deferred.resolve('Votre mot de passe a été changé');
         });
         return deferred.promise;
-    }
+    },
 
-    $this.getId = () => {
+   getId: ()=> {
         let deferred = $q.defer();
         $http.post('/', { request: 'Users.getUserId' }).then((response) => {
             deferred.resolve(response.data);
         });
         return deferred.promise;
     }
+};
+return userFactory;
 }]);

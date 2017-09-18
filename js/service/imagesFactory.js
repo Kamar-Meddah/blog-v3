@@ -1,11 +1,11 @@
-app.factory('imagesFactory', ['$http', '$q',function($http, $q) {
-    ImagesFactory={
+app.factory('ImagesFactory', ['$http', '$q',function($http, $q) {
+    imagesFactory={
 
         find : (id) => {
         let deferred = $q.defer();
         $http.post('/', { request: 'Images.find', id: id }).then((response) => {
-            ImagesFactory.images = response.data;
-            deferred.resolve(ImagesFactory.images);
+            imagesFactory.images = response.data;
+            deferred.resolve(imagesFactory.images);
         }, () => {
             deferred.reject('recharger la page');
         });
@@ -23,5 +23,5 @@ app.factory('imagesFactory', ['$http', '$q',function($http, $q) {
     }
 
     }
-    return ImagesFactory;
+    return imagesFactory;
 }]);

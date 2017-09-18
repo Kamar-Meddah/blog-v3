@@ -1,17 +1,17 @@
-app.factory('categoriesFactory', ['$http', '$q', '$routeParams',function($http, $q, $routeParams) {
-    categorie = {
+app.factory('CategoriesFactory', ['$http', '$q', '$routeParams',function($http, $q, $routeParams) {
+    categoriesFactory = {
 
         categories: undefined,
         // recupérer tt les categories
 
         allCat: () => {
             let deferred = $q.defer();
-            if (categorie.categories != undefined) {
-                deferred.resolve(categorie.categories);
+            if (categoriesFactory.categories != undefined) {
+                deferred.resolve(categoriesFactory.categories);
             } else {
                 $http.post('/', { request: 'Categories.all' }).then((response) => {
-                    categorie.categories = response.data;
-                    deferred.resolve(categorie.categories);
+                    categoriesFactory.categories = response.data;
+                    deferred.resolve(categoriesFactory.categories);
                 }, () => {
                     deferred.reject('recharger la page');
                 });
@@ -23,8 +23,8 @@ app.factory('categoriesFactory', ['$http', '$q', '$routeParams',function($http, 
             let deferred = $q.defer();
 
             $http.post('/', { request: 'Categories.index', page: page }).then((response) => {
-                categorie.categories = response.data;
-                deferred.resolve(categorie.categories);
+                categoriesFactory.categories = response.data;
+                deferred.resolve(categoriesFactory.categories);
             }, () => {
                 deferred.reject('recharger la page');
 
@@ -62,8 +62,7 @@ app.factory('categoriesFactory', ['$http', '$q', '$routeParams',function($http, 
             });
             return deferred.promise;
         }
- 
 
     }
-    return categorie;
+    return categoriesFactory;
 }]);

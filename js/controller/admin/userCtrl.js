@@ -1,5 +1,5 @@
-app.controller('userCtrl', ['$scope', '$rootScope', 'userService', 'EzAlert', '$location',function($scope, $rootScope, userService, EzAlert, $location) {
-    userService.logged().then((data) => {
+app.controller('UserCtrl', ['$scope', '$rootScope', 'UserFactory', 'EzAlert', '$location',function($scope, $rootScope, UserFactory, EzAlert, $location) {
+    UserFactory.logged().then((data) => {
         if (data === false) {
             $location.path('err/error/404');
             $rootScope.dat = false;
@@ -7,7 +7,7 @@ app.controller('userCtrl', ['$scope', '$rootScope', 'userService', 'EzAlert', '$
 
         } else {
             $rootScope.dat = true;
-            userService.getId().then((data) => {
+            UserFactory.getId().then((data) => {
                 $scope.id = data.id;
 
             });
@@ -15,7 +15,7 @@ app.controller('userCtrl', ['$scope', '$rootScope', 'userService', 'EzAlert', '$
     });
 
     $rootScope.decon = () => {
-        userService.logout().then((data) => {
+        UserFactory.logout().then((data) => {
             EzAlert.success(data);
             $location.path('/');
         }, (data) => {
@@ -24,9 +24,9 @@ app.controller('userCtrl', ['$scope', '$rootScope', 'userService', 'EzAlert', '$
     }
 
     $scope.usernameChange = () => {
-        userService.checkPass($scope.id, $scope.password).then((data) => {
+        UserFactory.checkPass($scope.id, $scope.password).then((data) => {
             if (data !== false) {
-                userService.usernameChange($scope.id, $scope.username).then((data) => {
+                UserFactory.usernameChange($scope.id, $scope.username).then((data) => {
                     EzAlert.success(data);
                     $scope.password = '';
                     $scope.username = '';
@@ -40,9 +40,9 @@ app.controller('userCtrl', ['$scope', '$rootScope', 'userService', 'EzAlert', '$
     }
 
     $scope.passChange = () => {
-        userService.checkPass($scope.id, $scope.password).then((data) => {
+        UserFactory.checkPass($scope.id, $scope.password).then((data) => {
             if (data !== false) {
-                userService.passChange($scope.id, $scope.new_pass).then((data) => {
+                UserFactory.passChange($scope.id, $scope.new_pass).then((data) => {
                     EzAlert.success(data);
                     $scope.password = '';
                     $scope.new_pass = '';

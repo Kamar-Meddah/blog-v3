@@ -1,4 +1,4 @@
-app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$routeParams','imagesFactory','categoriesFactory', 'postsFactory', 'EzAlert', '$location', '$http',function($scope, $ngConfirm,$rootScope, $routeParams,imagesFactory,categoriesFactory, postsFactory, EzAlert, $location, $http) {
+app.controller('AdminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$routeParams','ImagesFactory','CategoriesFactory', 'PostsFactory', 'EzAlert', '$location', '$http',function($scope, $ngConfirm,$rootScope, $routeParams,ImagesFactory,CategoriesFactory, PostsFactory, EzAlert, $location, $http) {
     $rootScope.loading = true;
     $rootScope.lo = true;
     $scope.images=[];
@@ -14,12 +14,12 @@ app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
         theme: 'modern'
     };
 
-    categoriesFactory.allCat().then((data) => {
+    CategoriesFactory.allCat().then((data) => {
         $scope.categories = data;
     });
 
     if ($routeParams.posid != undefined) {
-        postsFactory.find($routeParams.posid).then((data) => {
+        PostsFactory.find($routeParams.posid).then((data) => {
             $scope.titre = data.titre;
             $scope.content = data.contenu;
             $scope.category = data.category_id.toString();
@@ -28,7 +28,7 @@ app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
 
         })
 
-        imagesFactory.find($routeParams.posid).then((data) => {
+        ImagesFactory.find($routeParams.posid).then((data) => {
             $scope.images = data;
             $rootScope.lo = false;
         });
@@ -47,7 +47,7 @@ app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
                     text: 'Oui',
                     btnClass: 'btn-red',
                     action: function(scope, button) {
-                        imagesFactory.delete(id).then((data) => {
+                        ImagesFactory.delete(id).then((data) => {
                           $scope.images.splice(index,1);
                           EzAlert.success(data);
                         },(data)=>{
@@ -67,7 +67,7 @@ app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
     $scope.add = () => {
       if($scope.category !== undefined){
         let formElement = new FormData(document.querySelector("form"));
-        postsFactory.add(formElement).then((data) => {
+        PostsFactory.add(formElement).then((data) => {
             EzAlert.success('Votre post a été ajouté');
             $location.path('/admin/posts/edit/' + $scope.titre + '/' + data);
         })
@@ -76,7 +76,7 @@ app.controller('adminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
 
     $scope.edit = () => {
         let formElement = new FormData(document.querySelector("form"));
-        postsFactory.edit(formElement).then((data) => {
+        PostsFactory.edit(formElement).then((data) => {
             angular.forEach(data,(value)=>{
               $scope.images.push(value);
             });

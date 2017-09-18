@@ -5,58 +5,58 @@ app.config(($routeProvider) => {
 
         .when('/:page/', {
             templateUrl: 'view/posts/postsHome.html',
-            controller: 'postsCtrl'
+            controller: 'PostsCtrl'
         })
         .when('/category=:categorie :category_id/:page/', {
             templateUrl: 'view/posts/postsByCategorie.html',
-            controller: 'bycategorieCtrl'
+            controller: 'PostCategorieCtrl'
         })
         .when('/category=:categorie/post=:post/:postId/', {
             templateUrl: 'view/posts/postsShow.html',
-            controller: 'postCtrl'
+            controller: 'PostCtrl'
         })
         .when('/search/:post/:page/', {
             templateUrl: 'view/posts/postsSearch.html',
-            controller: 'postsSearchCtrl'
+            controller: 'PostsSearchCtrl'
         })
         .when('/users/login/', {
             templateUrl: 'view/users/login.html',
-            controller: 'usersCtrl'
+            controller: 'UsersCtrl'
         })
         .when('/admin/home/', {
             templateUrl: 'view/admin/adminHome.html'
         })
         .when('/admin/categories/:page/', {
             templateUrl: 'view/admin/categories/adminCategories.html',
-            controller: 'categoriesCtrl'
+            controller: 'CategoriesCtrl'
         })
         .when('/admin/categories/edit/:cat/:catid/', {
             templateUrl: 'view/admin/categories/categoriesEdit.html',
-            controller: 'categoriesEditCtrl'
+            controller: 'CategoriesEditCtrl'
         })
         .when('/admin/categories/edit/add/', {
             templateUrl: 'view/admin/categories/categoriesAdd.html',
-            controller: 'categoriesEditCtrl'
+            controller: 'CategoriesEditCtrl'
         })
         .when('/admin/posts/:page/', {
             templateUrl: 'view/admin/posts/adminPosts.html',
-            controller: 'adminPostsCtrl'
+            controller: 'AdminPostsCtrl'
         })
         .when('/admin/posts/edit/:pos/:posid/', {
             templateUrl: 'view/admin/posts/postsEdit.html',
-            controller: 'adminPostsEditCtrl'
+            controller: 'AdminPostsEditCtrl'
         })
         .when('/admin/posts/edit/add/', {
             templateUrl: 'view/admin/posts/postsAdd.html',
-            controller: 'adminPostsEditCtrl'
+            controller: 'AdminPostsEditCtrl'
         })
         .when('/admin/user/edit/password/', {
             templateUrl: 'view/admin/user/passwordEdit.html',
-            controller: 'userCtrl'
+            controller: 'UserCtrl'
         })
         .when('/admin/user/edit/username/', {
             templateUrl: 'view/admin/user/usernameEdit.html',
-            controller: 'userCtrl'
+            controller: 'UserCtrl'
         })
         .when('/', {
             redirectTo:'/1/'

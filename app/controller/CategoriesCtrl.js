@@ -26,7 +26,6 @@ class CategoriesCtrl{
 }
 
  add(request,response){
-   console.log(request.body)
     this.categories.create(['titre'],[request.body.title]);
     response.json();
   }

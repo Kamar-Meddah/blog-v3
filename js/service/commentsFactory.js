@@ -1,11 +1,11 @@
-app.factory('commentsFactory', ['$http', '$q', '$routeParams',function($http, $q, $routeParams) {
-    CommentsFactory = {
+app.factory('CommentsFactory', ['$http', '$q', '$routeParams',function($http, $q, $routeParams) {
+    commentsFactory = {
 
         find: (id) => {
             let deferred = $q.defer();
             $http.post('/', { request: 'Comments.find', id: id }).then((response) => {
-                PostsFactory.comments = response.data;
-                deferred.resolve(PostsFactory.comments);
+                commentsFactory.comments = response.data;
+                deferred.resolve(commentsFactory.comments);
             }, () => {
                 deferred.reject('Impossible de recuperer les commentaire , recharger la page');
             });
@@ -34,5 +34,5 @@ app.factory('commentsFactory', ['$http', '$q', '$routeParams',function($http, $q
 
     }
 
-    return CommentsFactory;
+    return commentsFactory;
 }]);

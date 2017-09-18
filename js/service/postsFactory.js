@@ -1,5 +1,5 @@
-app.factory('postsFactory',['$http', '$q', function($http, $q) {
-    PostsFactory={
+app.factory('PostsFactory',['$http', '$q', function($http, $q) {
+    postsFactory={
     posts : false,
     categories :false,
     post : false,
@@ -7,8 +7,8 @@ app.factory('postsFactory',['$http', '$q', function($http, $q) {
     all : (page) => {
         let deferred = $q.defer();
         $http.post('/', { request: 'Articles.index', page: page }).then((response) => {
-            PostsFactory.posts = response.data;
-            deferred.resolve(PostsFactory.posts);
+            postsFactory.posts = response.data;
+            deferred.resolve(postsFactory.posts);
         }, () => {
             deferred.reject('Impossible de recuperer les articles , recharger la page');
         });
@@ -18,8 +18,8 @@ app.factory('postsFactory',['$http', '$q', function($http, $q) {
     find : (id) => {
         let deferred = $q.defer();
         $http.post('/', { request: 'Articles.show', id: id }).then((response) => {
-            PostsFactory.post = response.data;
-            deferred.resolve(PostsFactory.post);
+            postsFactory.post = response.data;
+            deferred.resolve(postsFactory.post);
         }, () => {
             deferred.reject('recharger la page');
         });
@@ -31,8 +31,8 @@ app.factory('postsFactory',['$http', '$q', function($http, $q) {
 
         $http.post('/', { request: 'Articles.byCategorie', category_id: id, page: page }).then((response) => {
 
-            PostsFactory.Cposts = response.data;
-            deferred.resolve(PostsFactory.Cposts);
+            postsFactory.Cposts = response.data;
+            deferred.resolve(postsFactory.Cposts);
         }, () => {
             deferred.reject('Impossible de recuperer les articles , recharger la page');
         });
@@ -42,8 +42,8 @@ app.factory('postsFactory',['$http', '$q', function($http, $q) {
     searc : (req, page) => {
         let deferred = $q.defer();
         $http.post('/', { request: 'Articles.search', search: req, page: page }).then((response) => {
-            PostsFactory.S = response.data;
-            deferred.resolve(PostsFactory.S);
+            postsFactory.S = response.data;
+            deferred.resolve(postsFactory.S);
         }, () => {
             deferred.reject('Impossible de recuperer les articles , recharger la page');
         });
@@ -82,11 +82,8 @@ app.factory('postsFactory',['$http', '$q', function($http, $q) {
             deferred.reject('Impossible de d`\'editer l\'articles , recharger la page');
         });
         return deferred.promise;
-    }
-
-
-    
+    }    
 }
-return PostsFactory;
+return postsFactory;
 
 }]);

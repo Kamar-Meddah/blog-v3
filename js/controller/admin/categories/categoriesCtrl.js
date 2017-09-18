@@ -1,4 +1,4 @@
-app.controller('categoriesCtrl', ['$ngConfirm', '$scope', '$rootScope', 'categoriesFactory', 'EzAlert','$routeParams',function($ngConfirm, $scope, $rootScope, categoriesFactory, EzAlert,$routeParams) {
+app.controller('CategoriesCtrl', ['$ngConfirm', '$scope', '$rootScope', 'CategoriesFactory', 'EzAlert','$routeParams',function($ngConfirm, $scope, $rootScope, CategoriesFactory, EzAlert,$routeParams) {
     $rootScope.loading = true;
 
     $scope.pages = [];
@@ -10,7 +10,7 @@ app.controller('categoriesCtrl', ['$ngConfirm', '$scope', '$rootScope', 'categor
     $scope.p = $routeParams.page;
 
 
-    categoriesFactory.allCatP($scope.p).then((data) => {
+    CategoriesFactory.allCatP($scope.p).then((data) => {
         $scope.categories = data.art;
         $scope.last = data.nbpage;
         for (let i = 1; i <= data.nbpage; i++) {
@@ -31,7 +31,7 @@ app.controller('categoriesCtrl', ['$ngConfirm', '$scope', '$rootScope', 'categor
                     text: 'Oui',
                     btnClass: 'btn-red',
                     action: function(scope, button) {
-                        categoriesFactory.delete(id).then((data) => {
+                        CategoriesFactory.delete(id).then((data) => {
                            
                             if (data!== 0) {
                                 EzAlert.error('Impossible d\'effectué la suppression ! La categorie n\'est pas vide');

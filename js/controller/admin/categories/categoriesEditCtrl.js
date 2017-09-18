@@ -1,9 +1,8 @@
-app.controller('categoriesEditCtrl', ['$scope', '$routeParams','categoriesFactory', 'EzAlert', '$location',function($scope, $routeParams,categoriesFactory, EzAlert, $location) {
+app.controller('CategoriesEditCtrl', ['$scope', '$routeParams','CategoriesFactory', 'EzAlert', '$location',function($scope, $routeParams,CategoriesFactory, EzAlert, $location) {
 
     $scope.insert = () => {
-        categoriesFactory.insert($scope.ins).then((data) => {
+        CategoriesFactory.insert($scope.ins).then((data) => {
             EzAlert.success(data);
-            //$scope.ins = '';
             $location.path('/admin/categories/1');
         },(data)=>{
             EzAlert.error(data);
@@ -12,7 +11,7 @@ app.controller('categoriesEditCtrl', ['$scope', '$routeParams','categoriesFactor
     $scope.ed = $routeParams.cat;
 
     $scope.edit = () => {
-        categoriesFactory.edit($scope.ed,$routeParams.catid).then((data) => {
+        CategoriesFactory.edit($scope.ed,$routeParams.catid).then((data) => {
             EzAlert.success(data);
             $location.path('/admin/categories/1');
         },(data)=>{
