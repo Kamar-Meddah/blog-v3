@@ -4,7 +4,7 @@ app.controller('PostCtrl', ['$scope','$ngConfirm','CommentsFactory','CategoriesF
     $scope.load = true;
 
     UserFactory.logged().then((data) => {
-        if (data === 'false') {
+        if (data === false) {
             $rootScope.dat = false;
         } else {
             $rootScope.dat = true;
