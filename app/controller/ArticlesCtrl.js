@@ -8,7 +8,7 @@ class ArticlesCtrl{
     this.articles.count((nbr)=>{
       let parpage=6;
       let page=request.body.page;
-      let total=nbr[0].total;
+      let total=nbr;
       let nbpage=Math.ceil(total/parpage);
       let arg1=page*parpage-parpage;
       let arg2=parpage;
@@ -32,7 +32,7 @@ show(request, response){
     this.articles.countSearch(request.body.search,(nbr)=>{
     let parpage=6;
     let page=request.body.page;
-    let total=nbr[0].total;
+    let total=nbr;
     let nbpage=Math.ceil(total/parpage);
     let arg1=page*parpage-parpage;
     let arg2=parpage;
@@ -48,7 +48,7 @@ byCategorie (request, response) {
     this.articles.countByCategorie(request.body.category_id,(nbr)=>{
     let parpage=6;
     let page=request.body.page;
-    let total=nbr[0].total;
+    let total=nbr;
     let nbpage=Math.ceil(total/parpage);
     let arg1=page*parpage-parpage;
     let arg2=parpage;
@@ -79,14 +79,14 @@ delete(request,response){
 
 add(request,response){
   const fs=require('fs');
-  this.articles.create(['titre','contenu','category_id'],[request.body.titre,request.body.content,request.body.category],(postId)=>{
+  this.articles.create({'titre':request.body.titre,'contenu':request.body.content,'categoryId':request.body.category},(postId)=>{
     const images=require('../app').getTable('images');
     request.files.forEach((element)=>{
       if(element.mimetype.split('/')[0] ==='image'){
-      images.create(['articles_id'],[postId],(imgId)=>{
+      images.create({'articlesId':postId},(imgId)=>{
         fs.rename(`img/articles/${element.filename}`,`img/articles/${imgId}.jpg`,()=>{
           let name=imgId+'.jpg';
-          images.update(imgId,['name'],[name]);
+          images.update(imgId,{'name':name});
         })//end rename
       })//end image insert
     }else{fs.unlink(`img/articles/${element.filename}`,(err)=>{
@@ -101,18 +101,19 @@ add(request,response){
 edit(request,response){
     const fs=require('fs');
     let r=[];
-    this.articles.update(request.body.id,['titre','contenu','category_id'],[request.body.titre,request.body.content,request.body.category],()=>{
+    this.articles.update(request.body.id,{'titre':request.body.titre,'contenu':request.body.content,'categoryId':request.body.category},()=>{
       const images=require('../app').getTable('images');
       if(request.files.length > '0'){
       request.files.forEach((element,i)=>{
         if(element.mimetype.split('/')[0] ==='image'){
-        images.create(['articles_id'],[request.body.id],(imgId)=>{
+        images.create({'articlesId':request.body.id},(imgId)=>{
           fs.rename(`img/articles/${element.filename}`,`img/articles/${imgId}.jpg`,(err)=>{
             if(err){}
             let name=imgId+'.jpg';
-            images.update(imgId,['name'],[name]);
+            images.update(imgId,{'name':name});
             r.push({'id':imgId,'name':name});
             if(i === request.files.length-1){
+              console.log(r)
               response.json(r);
             }
           })//end rename

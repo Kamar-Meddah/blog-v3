@@ -10,7 +10,7 @@ class CommentsCtrl{
   }
 
   add(request,response){
-      this.comments.create(["name","content","articles_id"],[request.body.name,request.body.comment,request.body.postId]);
+      this.comments.create({"name":request.body.name,"content":request.body.comment,"articlesId":request.body.postId});
       response.json();
     }
 

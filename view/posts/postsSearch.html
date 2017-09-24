@@ -14,8 +14,8 @@
             <h1>Loading...</h1></em></div>
         <div ng-hide="loading">
             <div ng-repeat="post in posts">
-                <h2><a href="#!/category={{post.categorie}}/post={{post.titre}}/{{post.id}}">{{post.titre}}</a></h2>
-                <a href="#!/category={{post.categorie}} {{post.catid}}/1"><i class="fa fa-folder-open-o" aria-hidden="true"></i><em class="shadow">{{post.categorie}}</em></a>
+                <h2><a href="#!/category={{post.category.titre}}/post={{post.titre}}/{{post.id}}">{{post.titre}}</a></h2>
+                <a href="#!/category={{post.category.titre}} {{post.category.id}}/1"><i class="fa fa-folder-open-o" aria-hidden="true"></i><em class="shadow">{{post.category.titre}}</em></a>
                 <br><br>
                 <p ng-bind-html="post|contenu"></p>
                 <div class="text-right"><em>{{post.date|timeAgo}}</em></div>

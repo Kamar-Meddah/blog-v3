@@ -15,14 +15,14 @@ app.controller('AdminPostsEditCtrl',['$scope', '$ngConfirm','$rootScope', '$rout
     };
 
     CategoriesFactory.allCat().then((data) => {
-        $scope.categories = data;
+        $scope.categories = data.art;
     });
 
     if ($routeParams.posid != undefined) {
         PostsFactory.find($routeParams.posid).then((data) => {
             $scope.titre = data.titre;
             $scope.content = data.contenu;
-            $scope.category = data.category_id.toString();
+            $scope.category = data.categoryId.toString();
             $scope.oop = data.id;
             $rootScope.loading = false;
 

@@ -10,7 +10,7 @@ class app{//Begin Class
      getDb(){
          
         if(this.DB=== undefined){
-            const dbConnect=require('../core/database/mySqlDB');
+            const dbConnect=require('../core/database/SqlDB');
             this.DB=new dbConnect(require('../config/dbconfig'));
         }
         return this.DB.getDbConnect();

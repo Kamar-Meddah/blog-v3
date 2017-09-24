@@ -21,6 +21,6 @@ app.controller('PostsSearchCtrl',['$scope', '$rootScope', '$routeParams', 'Categ
     }, () => {});
 
     CategoriesFactory.allCat().then((data) => {
-        $scope.categories = data;
+        $scope.categories = data.art;
     }, (data) => {});
 }]);

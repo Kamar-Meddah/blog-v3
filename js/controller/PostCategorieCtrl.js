@@ -22,7 +22,7 @@ app.controller('PostCategorieCtrl',['$scope', '$rootScope', 'CategoriesFactory',
 
     CategoriesFactory.allCat().then((data) => {
 
-        $scope.categories = data;
+        $scope.categories = data.art;
     }, (data) => {
 
     });

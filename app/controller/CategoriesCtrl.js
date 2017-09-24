@@ -14,7 +14,7 @@ class CategoriesCtrl{
       this.categories.count((nbr)=>{
       let parpage=6;
       let page=request.body.page;
-      let total=nbr[0].total;
+      let total=nbr;
       let nbpage=Math.ceil(total/parpage);
       let arg1=page*parpage-parpage;
       let arg2=parpage;
@@ -26,22 +26,22 @@ class CategoriesCtrl{
 }
 
  add(request,response){
-    this.categories.create(['titre'],[request.body.title]);
+    this.categories.create({'titre':request.body.title});
     response.json();
   }
 
   edit(request,response){
-    this.categories.update(request.body.id,['titre'],[request.body.title]);
+    this.categories.update(request.body.id,{'titre':request.body.title});
     response.json();
   }
 
   delete(request,response){
     const articles=require('../app').getTable('articles');
     articles.countByCategorie(request.body.id,(rows)=>{
-      if(rows[0].total == 0){
+      if(rows == 0){
            this.categories.delete(request.body.id); 
       }
-      response.json({'num':rows[0].total})
+      response.json({'num':rows})
     })
   }
 

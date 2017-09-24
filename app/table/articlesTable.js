@@ -8,113 +8,93 @@ class articlesTable extends table{
     }
 
     countByCategorie(id,cb){
-        this.db.query(`SELECT count(id) as total FROM ${this.tab} WHERE category_id=? `,[id],(err,rows)=>{
-            cb(rows);
-        })
+        this[this.tab].count({where:{'categoryId':id}}).then((res)=>{
+            cb(res)
+          })
     }
 
     lastByCategorie(id,arg=[],cb){
-        this.db.query(`SELECT
-        SUBSTRING(articles.contenu,1,200)as contenu,articles.id,articles.date,articles.titre,categories.titre as categorie
-        FROM
-        articles LEFT JOIN categories
-        ON category_id=categories.id
-        WHERE
-        category_id=?
-        ORDER BY articles.date DESC
-        LIMIT ${arg[0]},${arg[1]}`,[id],(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
+
+        this[this.tab].findAll({
+            include: [this.categories],
+            offset:arg[0],
+            limit:arg[1],
+            where:{"categoryId":id},
+            order: [['date', 'DESC']],
+            attributes: [
+                [this.db.fn('SUBSTRING', this.db.col('contenu'),1,200),'contenu'],
+                'id','date','titre','categoryId'
+              ]
+        }).then((res)=>{
+          cb(res)
+        })
        }
 
        last(arg=[],cb){
-        this.db.query(`SELECT
-        articles.id,articles.titre,SUBSTRING(articles.contenu,1,200)as contenu,categories.titre as categorie,articles.category_id as catid,articles.date
-        FROM
-        articles LEFT JOIN categories
-        ON articles.category_id=categories.id
-        ORDER BY articles.date desc
-        LIMIT ${arg[0]},${arg[1]}`,(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
+        this[this.tab].findAll({
+            include: [this.categories],
+            offset:arg[0],
+            limit:arg[1],
+            order: [['date', 'DESC']],
+            attributes: [
+                [this.db.fn('SUBSTRING', this.db.col('contenu'),1,200),'contenu'],
+                'id','date','titre','categoryId'
+              ]
+        }).then((res)=>{
+          cb(res)
+        })
         
        }
 
        all(arg=[],cb){
-        this.db.query(`SELECT
-        articles.id,articles.titre,categories.titre as categorie,articles.category_id as catid
-        FROM
-        articles LEFT JOIN categories
-        ON articles.category_id=categories.id
-        ORDER BY articles.date desc
-        LIMIT ${arg[0]},${arg[1]}`,(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
+        this[this.tab].findAll({
+            offset:arg[0],
+            order: [['date', 'DESC']],
+            attributes: ['id','date','titre','categoryId']
+        }).then((res)=>{
+
+          cb(res)
+        })
         
        }
 
        search(index,arg=[],cb){
         let z=[];
-        let t=[];
         let a=index.split(' ');
-        a.forEach((value)=>{
-            t.push('articles.titre LIKE ?');
-            value='%'+value+'%';
-            z.push(value);
-       })
-        t=t.join(' OR ');
+        z=a.join('%');
 
-        this.db.query(`
-        SELECT
-        articles.id,articles.titre,SUBSTRING(articles.contenu,1,200)as contenu,categories.titre as categorie,articles.category_id as catid,articles.date
-        FROM
-        articles LEFT JOIN categories
-        ON articles.category_id=categories.id
-        WHERE ${t}
-        ORDER BY articles.date DESC
-        LIMIT ${arg[0]},${arg[1]}`,z,(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
-        
+        this[this.tab].findAll({
+            include: [this.categories],
+            offset:arg[0],
+            limit:arg[1],
+            where:{"titre":{$like:'%'+z+'%'}},
+            order: [['date', 'DESC']],
+            attributes: [
+                [this.db.fn('SUBSTRING', this.db.col('contenu'),1,200),'contenu'],
+                'id','date','titre','categoryId'
+              ]
+        }).then((res)=>{
+          cb(res)
+        })
        }
 
        countSearch(index,cb){
         let z=[];
-        let t=[];
         let a=index.split(' ');
-        a.forEach((value)=>{
-            t.push('articles.titre LIKE ?');
-            value='%'+value+'%';
-            z.push(value);
-       })
-        t=t.join(' OR ');
-        this.db.query(`SELECT
-        COUNT(id) as total
-        FROM
-        articles
-        WHERE
-         ${t}`,z,(err,rows)=>{
-        cb(rows);
+        z=a.join('%');
+
+        this[this.tab].count({where:{"titre":{$like:'%'+z+'%'}}}).then((res)=>{
+          cb(res)
         })
     }
 
     find(id,cb){
-        this.db.query(`      
-        SELECT
-        articles.id,articles.titre,articles.contenu,categories.titre as categorie,articles.category_id
-        FROM
-        articles LEFT JOIN categories
-        ON articles.category_id=categories.id
-        WHERE
-        articles.id=?`,[id],(err,row)=>{
-            if(err) throw err;
-            cb(row[0]);
-        });
-        
+        this[this.tab].find({
+            include: [this.categories],
+            where:{"id":id}
+        }).then((res)=>{
+          cb(res)
+        })        
        }
 
 }

@@ -25,7 +25,7 @@
                 <tbody>
                     <tr ng-repeat="post in posts">
                         <td class="text-center"><b>{{post.id}}</b></td>
-                        <td>{{post.categorie}}</td>
+                        <td>{{post.category.titre}}</td>
                         <td>{{post.titre}}</td>
                         <td class="text-center">
                             <a href="#!/admin/posts/edit/{{post.titre}}/{{post.id}}" class="btn btn-outline-warning" style="margin:0.5em;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><em>Edit</em></a>

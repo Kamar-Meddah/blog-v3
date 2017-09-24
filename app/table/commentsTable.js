@@ -8,13 +8,13 @@ class commentsTable extends table{
     }
 
     find(id,cb){
-        this.db.query(`SELECT * FROM comments WHERE articles_id=? ORDER BY date DESC`,[id],(err,rows)=>{
-            cb(rows);
+        this[this.tab].findAll({where:{"articlesId":id},order: [['date', 'DESC']]}).then(res=>{
+            cb(res)
         })
     }
 
     deleteCom(id,cb=null){
-        this.db.query(`DELETE FROM comments WHERE articles_id=? `,[id],(err)=>{
+        this[this.tab].destroy({where:{"articlesId":id}}).then(res=>{
             if(cb !== null){
                 cb();
             }

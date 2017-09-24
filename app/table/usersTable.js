@@ -8,9 +8,17 @@ class usersTable extends table{
     }
 
     findPass(id,pass,cb){
-        this.db.query(`SELECT * FROM users WHERE id=? AND password=? `,[id,pass],(err,rows)=>{
-            cb(rows[0]);
+        this[this.tab].find({where:{"id":id,"password":pass}}).then((res)=>{
+            cb(res)
         })
+    }
+
+    login(user=[],cb){
+        this[this.tab].find({where:{"username":user[0],"password":user[1]}}).then((res)=>{
+            console.log(res)
+            cb(res)
+        })
+
     }
 
 }

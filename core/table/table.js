@@ -1,73 +1,104 @@
+const Sequelize=require('sequelize')
 class table {//Begin Class
 
     constructor(db = require('../../app/app').getDb()){
         this.tab='';
         this.db=db;
+        //articles table
+        this.articles=this.db.define('articles', {
+            titre: {type: Sequelize.STRING},
+            contenu: {type: Sequelize.TEXT},
+            date:{type:Sequelize.DATE,defaultValue: this.db.fn('NOW')},
+            categoryId:{
+              type: Sequelize.INTEGER,
+              references: {
+                model: "categories",
+                key: 'id',
+                }}
+          });
+        this.articles.sync();
+        //categories table
+        this.categories=this.db.define('categories', {
+            titre: {type: Sequelize.STRING}
+        });
+        this.categories.sync();
+        //users table
+        this.users=this.db.define('users',{
+            username:{type:Sequelize.STRING},
+            password:{type:Sequelize.STRING}
+        })
+        this.users.sync();
+        //images table
+        this.images=this.db.define('images',{
+            name:{type:Sequelize.STRING},
+            articlesId:{
+                type: Sequelize.INTEGER,
+                references: {
+                  model: "articles",
+                  key: 'id',
+                  }}
+        })
+        this.images.sync();
+        //comments table
+        this.comments=this.db.define('comments',{
+            name:{type:Sequelize.STRING},
+            content:{type:Sequelize.TEXT},
+            date:{type:Sequelize.DATE,defaultValue: this.db.fn('NOW')},
+            articlesId:{
+                type: Sequelize.INTEGER,
+                references: {
+                  model: "articles",
+                  key: 'id',
+                  }}
+        })
+        this.comments.sync();
+         //constraines
+            //articles - categories
+        this.articles.belongsTo(this.categories)
+        this.categories.hasMany(this.articles)
+
+
+
     }
 
     count(cb){
-        this.db.query(`SELECT count(id) as total FROM ${this.tab} `,(err,row)=>{
-            cb(row);
+        this[this.tab].count().then(res=>{
+            cb(res)
         })
     }
 
     all(cb){
-     this.db.query(`SELECT * FROM ${this.tab} ORDER BY titre ASC`,(err,rows)=>{
-         if(err) throw err;
-         cb(rows);
-     });
+      this[this.tab].findAll({order: [['titre', 'ASC']]}).then((res)=>{
+          cb(res)
+      })
     }
     
     find(id,cb){
-        this.db.query(`SELECT * FROM ${this.tab} WHERE id=?`,[id],(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
-       }
+        this[this.tab].find({where:{'id':id}}).then((res)=>{
+            cb(res)
+        })
+    }
     
      last(arg=[],cb){
-        this.db.query(`SELECT * FROM ${this.tab} ORDER BY date DESC LIMIT ${arg[0]},${arg[1]};SELECT * FROM categories`,(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
-        
+        this[this.tab].findAll({offset: arg[0], limit: arg[1],order: [['date', 'DESC']]}).then((res)=>{
+            cb(res)
+        })        
        }
     
-    create(fields=[],values=[],cb=null){
-        let chain='';
-        fields.forEach((field,i)=>{
-            field+=' = ?'
-            fields[i]=field;
-        })
-        chain= fields.join();
-        this.db.query(`INSERT INTO ${this.tab} SET ${chain}`,values,(err,res)=>{
-            if(err) throw err
-            if(cb !== null){
-                cb(res.insertId);
-            }
-        });
+    create(obj,cb=null){
+        this[this.tab].create(obj).then((res)=>{
+            if(cb !== null){cb(res.id)}
+         })
     }
      
-    update(id,fields=[],values=[],cb=null){ 
-        let chain='';
-        fields.forEach((field,i)=>{
-            field+=' = ?'
-            fields[i]=field;
-        })
-        chain= fields.join();
-        values.push(id);
-        this.db.query(`UPDATE ${this.tab} SET ${chain} WHERE id=?`,values,(err)=>{
-            if(err) throw err
-            if(cb !== null){
-                cb();
-            }
-        });
+    update(id,obj,cb=null){ 
+        this[this.tab].update(obj,{where: {'id': id}}).then((res)=>{
+            if(cb !== null){cb()}
+         })
     }
 
     delete(id){
-        this.db.query(`DELETE FROM ${this.tab} WHERE id=?`,[id],(err)=>{
-            if(err) throw err
-        })
+        this[this.tab].destroy({where: {'id': id}})
     }
 
 }//End Class

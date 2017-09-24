@@ -8,12 +8,10 @@ class categoriesTable extends table{
     }
 
     allP(arg=[],cb){
-        this.db.query(`SELECT * FROM categories ORDER BY titre ASC LIMIT ${arg[0]},${arg[1]}`,(err,rows)=>{
-            if(err) throw err;
-            cb(rows);
-        });
+        this[this.tab].findAll({offset: arg[0], limit: arg[1],order: [['titre', 'ASC']]}).then((res)=>{
+            cb(res)
+        })
        }
-
 
     }
 

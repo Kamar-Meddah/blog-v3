@@ -1,7 +1,1 @@
-module.exports={
-    // debug: true,
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',
-    database : 'blog'
-  }
+module.exports='mysql://root:root@localhost:3306/blog'

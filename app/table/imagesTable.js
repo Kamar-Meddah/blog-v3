@@ -8,17 +8,18 @@ class imagesTable extends table{
 
    
    findImg(id,cb){
-        this.db.query(`SELECT * FROM images WHERE articles_id=? `,[id],(err,rows)=>{
-            cb(rows);
-        })
+       this[this.tab].findAll({where:{"articlesId":id}}).then((res)=>{
+           cb(res)
+       })
     }
 
     deleteWithArticle(id,cb=null){
-        this.db.query(`DELETE FROM images WHERE articles_id=? `,[id],(err)=>{
+        this[this.tab].destroy({where:{"articlesId":id}}).then(res=>{
             if(cb !== null){
                 cb();
             }
         })
+
     }
 }
 
