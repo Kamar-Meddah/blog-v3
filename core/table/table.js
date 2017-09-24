@@ -4,6 +4,11 @@ class table {//Begin Class
     constructor(db = require('../../app/app').getDb()){
         this.tab='';
         this.db=db;
+        //categories table
+        this.categories=this.db.define('categories', {
+            titre: {type: Sequelize.STRING}
+        });
+        this.categories.sync();
         //articles table
         this.articles=this.db.define('articles', {
             titre: {type: Sequelize.STRING},
@@ -16,12 +21,7 @@ class table {//Begin Class
                 key: 'id',
                 }}
           });
-        this.articles.sync();
-        //categories table
-        this.categories=this.db.define('categories', {
-            titre: {type: Sequelize.STRING}
-        });
-        this.categories.sync();
+        this.articles.sync();        
         //users table
         this.users=this.db.define('users',{
             username:{type:Sequelize.STRING},
