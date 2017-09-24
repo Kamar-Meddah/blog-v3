@@ -6,13 +6,17 @@ const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer({dest: 'img/articles/' }); // for parsing multipart/form-data
 const SessionStore = require('express-session-sequelize')(session.Store);
-
-
-
+const Sequelize=require('sequelize');
+const sequelize=new Sequelize(require('./config/dbconfig'))
+sequelize.define('sessions',{
+  session_id:{type:Sequelize.STRING,primaryKey: true},
+  expires:{type:Sequelize.INTEGER},
+  data:{type:Sequelize.TEXT,allowNull: true}
+})
 
 app.use(session({
   secret: 'keep it secret, keep it safe.',
-  store: new SessionStore({db: new (require('sequelize'))(require('./config/dbconfig'))}),
+  store: new SessionStore({db: sequelize}),
   resave: true,
   saveUninitialized: false,
 }));
