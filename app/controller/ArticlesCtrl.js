@@ -83,7 +83,7 @@ add(request,response){
     const images=require('../app').getTable('images');
     request.files.forEach((element)=>{
       if(element.mimetype.split('/')[0] ==='image'){
-      images.create({'articlesId':postId},(imgId)=>{
+      images.create({'articleId':postId},(imgId)=>{
         fs.rename(`img/articles/${element.filename}`,`img/articles/${imgId}.jpg`,()=>{
           let name=imgId+'.jpg';
           images.update(imgId,{'name':name});
@@ -106,14 +106,13 @@ edit(request,response){
       if(request.files.length > '0'){
       request.files.forEach((element,i)=>{
         if(element.mimetype.split('/')[0] ==='image'){
-        images.create({'articlesId':request.body.id},(imgId)=>{
+        images.create({'articleId':request.body.id},(imgId)=>{
           fs.rename(`img/articles/${element.filename}`,`img/articles/${imgId}.jpg`,(err)=>{
             if(err){}
             let name=imgId+'.jpg';
             images.update(imgId,{'name':name});
             r.push({'id':imgId,'name':name});
             if(i === request.files.length-1){
-              console.log(r)
               response.json(r);
             }
           })//end rename

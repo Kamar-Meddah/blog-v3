@@ -4,11 +4,13 @@ class table {//Begin Class
     constructor(db = require('../../app/app').getDb()){
         this.tab='';
         this.db=db;
+
         //categories table
         this.categories=this.db.define('categories', {
             titre: {type: Sequelize.STRING}
         });
         this.categories.sync();
+
         //articles table
         this.articles=this.db.define('articles', {
             titre: {type: Sequelize.STRING},
@@ -17,46 +19,55 @@ class table {//Begin Class
             categoryId:{
               type: Sequelize.INTEGER,
               references: {
-                model: "categories",
+                model: this.categories,
                 key: 'id',
                 }}
           });
-        this.articles.sync();        
+        this.articles.sync();   
+
         //users table
         this.users=this.db.define('users',{
             username:{type:Sequelize.STRING},
             password:{type:Sequelize.STRING}
         })
         this.users.sync();
+
         //images table
         this.images=this.db.define('images',{
             name:{type:Sequelize.STRING},
-            articlesId:{
+            articleId:{
                 type: Sequelize.INTEGER,
                 references: {
-                  model: "articles",
+                  model: this.articles,
                   key: 'id',
                   }}
         })
         this.images.sync();
+
         //comments table
         this.comments=this.db.define('comments',{
             name:{type:Sequelize.STRING},
             content:{type:Sequelize.TEXT},
             date:{type:Sequelize.DATE,defaultValue: this.db.fn('NOW')},
-            articlesId:{
+            articleId:{
                 type: Sequelize.INTEGER,
                 references: {
-                  model: "articles",
+                  model: this.articles,
                   key: 'id',
                   }}
         })
         this.comments.sync();
-         //constraines
+
+        //constraines
             //articles - categories
         this.articles.belongsTo(this.categories)
         this.categories.hasMany(this.articles)
-
+            //images - articles
+        this.images.belongsTo(this.articles)
+        this.articles.hasMany(this.images)
+            //comments - articles
+        this.comments.belongsTo(this.articles)
+        this.articles.hasMany(this.comments)
 
 
     }
