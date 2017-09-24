@@ -15,7 +15,6 @@ class usersTable extends table{
 
     login(user=[],cb){
         this[this.tab].find({where:{"username":user[0],"password":user[1]}}).then((res)=>{
-            console.log(res)
             cb(res)
         })
 

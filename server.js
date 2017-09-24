@@ -5,19 +5,21 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer({dest: 'img/articles/' }); // for parsing multipart/form-data
-const MySQLStore = require('express-mysql-session')(session);
-const sessionStore = new MySQLStore(require('./config/sessionStore'));
+const SessionStore = require('express-session-sequelize')(session.Store);
 
+
+
+
+app.use(session({
+  secret: 'keep it secret, keep it safe.',
+  store: new SessionStore({db: new (require('sequelize'))(require('./config/dbconfig'))}),
+  resave: true,
+  saveUninitialized: false,
+}));
 
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-  secret: 'session_cookie_secret',
-  store: sessionStore,
-  resave: false,
-  saveUninitialized: false,
-  cookie:{secure:false}
-}));
+
 
 
 app.use(express.static(__dirname+'/')); 
